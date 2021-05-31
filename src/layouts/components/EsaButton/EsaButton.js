@@ -29,11 +29,13 @@ const EsaButton = withStyles(theme => ({
       })
     }
   }
-}))(({ classes, className, children, loading, color, variant, ...rest }) => (
+}))(({ classes, className, children, loading, color, variant, isDisabled, handleClick, ...rest }) => (
   <Button
     {...rest}
     variant={variant}
     className={classnames(className, { [classes.root]: variant === 'contained' })}
+    disabled={isDisabled}
+    onClick={handleClick}
   >
     {loading ? <CircularProgress size={24} color="inherit" /> : children}
   </Button>
@@ -45,7 +47,9 @@ EsaButton.propTypes = {
   classes: PropTypes.object,
   loading: PropTypes.bool,
   color: PropTypes.oneOf(['default', 'primary', 'secondary', 'info', 'danger', 'dark']),
-  variant: PropTypes.oneOf(['text', 'outlined', 'contained'])
+  variant: PropTypes.oneOf(['text', 'outlined', 'contained']),
+  isDisabled: PropTypes.bool,
+  handleClick: PropTypes.func
 };
 
 EsaButton.defaultProps = {

@@ -13,6 +13,7 @@ import {
   EsaButton,
   PortletToolbar
 } from '../layouts/components';
+import EsaList from '../layouts/components/EsaList/EsaList';
 
 const styles = theme => ({
   root: {
@@ -147,20 +148,9 @@ export default function ExamplePage() {
                   </PortletToolbar>
                 </PortletHeader>
                 <PortletContent className={classes.portletContent} noPadding>
-                  <List>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(
-                      option => (
-                        <ListItem
-                          key={option}
-                          className={classes.listItem}
-                          selected={isSelected(option)}
-                          onClick={() => handleSelect(option)}
-                        >
-                          <ListItemText primary={`item-${option}`} />
-                        </ListItem>
-                      )
-                    )}
-                  </List>
+                  <EsaList elements={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
+                    isSelected={isSelected} handleSelect={handleSelect}
+                  />
                 </PortletContent>
               </Portlet>
             </Grid>
