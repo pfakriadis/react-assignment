@@ -9,18 +9,19 @@ const useStyles = makeStyles(styles);
 
 const Topbar = ({ title = '', ToolbarClasses, children }) => {
   const classes = useStyles();
+  
   return (
     <div className={`${classes.root} , ${ToolbarClasses}`}>
       <Toolbar className={classes.toolbar}>
         <div className={classes.brandWrapper}>
-          <NavLink to="/" className={classes.logo}>
+          <NavLink to={'/'} className={classes.logo}>
             EARTH<span style={{ fontWeight: 200 }}>NET</span>
           </NavLink>
         </div>
         <Typography variant="h6" color="inherit" className={classes.title}>
           {title}
         </Typography>
-        <EsaTopNavItem to="/wellbore" title="Wellbore" />
+        <EsaTopNavItem to="/wellbore"  title="Wellbore" />
         <EsaTopNavItem to="/histogram" title="Histogram" />
       </Toolbar>
       {children}

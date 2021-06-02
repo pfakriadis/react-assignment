@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Dashboard from '../layouts/Dashboard/Dashboard';
-import { Typography, makeStyles, Grid, List, ListItem, ListItemText } from '@material-ui/core';
+import { makeStyles, Grid, List, ListItem, ListItemText } from '@material-ui/core';
 import {
   Portlet,
   PortletHeader,
   PortletLabel,
   PortletContent,
   EsaButton,
-  PortletToolbar
 } from '../layouts/components';
-import EsaList from '../layouts/components/EsaList/EsaList';
 import { useWell } from '../hooks/useWell';
 import { useLog } from '../hooks/useLog';
 import { useFormation } from '../hooks/useFormation';
 import { usePlot } from '../hooks/usePlot';
 import Plot from 'react-plotly.js';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setAction } from '../store/actions/actions';
+import * as types from '../store/types';
 
 const styles = theme => ({
   root: {
@@ -72,6 +72,8 @@ const useStyles = makeStyles(styles);
 export default function Wellbore() {
 
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const store = useSelector(setAction);
   
   const {wells} = useWell();
   const {logs} = useLog();
@@ -79,32 +81,10 @@ export default function Wellbore() {
   const {plots} = usePlot();
 
 
-  const [selectedWells, setSelectedWells] = useState([]);
-  const [selectedLogs, setSelectedLogs] = useState([]);
-  const [selectedFormations, setSelectedFormations] = useState([]);
+  const [selectedWells, setSelectedWells] = useState(store.state.payload?.wells ? store.state.payload?.wells : []);
+  const [selectedLogs, setSelectedLogs] = useState(store.state.payload?.logs ? store.state.payload?.logs : []);
+  const [selectedFormations, setSelectedFormations] = useState(store.state.payload?.formations ? store.state.payload?.formations : []);
   const [selectedPlots, setSelectedPlots] = useState([]);
-
-  useEffect(() => {
-
-    // if (selectedWells.length > 0) {
-    //   const plotFiltered = plots.filter(plot => selectedWells.includes(plot.wellId));
-    //   let plotUpdatedArray = [];
-
-    //   plotFiltered.forEach(plot => {
-    //     let plotUpdated = {};
-    //     plotUpdated.type = 'scatter';
-    //     plotUpdated.orientation = 'h';
-    //     plotUpdated.x = plot.x;
-    //     plotUpdated.y = plot.y;
-    //     plotUpdatedArray.push(plotUpdated);
-    //   });
-    //   console.log(plotUpdatedArray);
-    //   setSelectedPlots(plotUpdatedArray);
-    // }
-    // else {
-    //   setSelectedPlots([]);
-    
-  }, [selectedWells]);
 
   const handleSelectWell = value => {
     const currentIndex = selectedWells.indexOf(value);
@@ -161,6 +141,7 @@ export default function Wellbore() {
       plotUpdatedArray.push(plotUpdated);
     });
     setSelectedPlots(plotUpdatedArray);
+    dispatch({ type: types.ACTIONS, payload: {wells: selectedWells, logs: selectedLogs, formations: selectedFormations} });
   };
 
   return (
@@ -240,7 +221,7 @@ export default function Wellbore() {
               </EsaButton>
             </Grid>
         </Grid>
-        <Grid item xs={12} md={5} container spacing={2}>
+        <Grid item xs={12} md={5} container spacing={0}>
           <Plot
             data={selectedPlots}
             layout={ {width: "60%", height: "100%"} }

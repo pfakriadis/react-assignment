@@ -3,10 +3,19 @@ import PropTypes from 'prop-types';
 import { makeStyles, ListItem, ListItemText } from '@material-ui/core';
 import classnames from 'classnames';
 import styles from './styles';
+import { useHistory } from 'react-router-dom';
+
 const useStyles = makeStyles(styles);
 
 const NavItem = ({ active, to, title }) => {
   const classes = useStyles();
+
+  let history = useHistory();
+
+  const handleNav = (to) => {
+    history.push(to);
+  };
+  
   return (
     <ListItem
       button
@@ -15,7 +24,7 @@ const NavItem = ({ active, to, title }) => {
         [classes.activeListItem]: active
       })}
       component="a"
-      href={to}
+      onClick={() => handleNav(to)}
     >
       <ListItemText classes={{ primary: classes.listItemText }} primary={title} />
     </ListItem>
