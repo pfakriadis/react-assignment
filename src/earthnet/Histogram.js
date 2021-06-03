@@ -100,6 +100,7 @@ export default function Histogram() {
       newSelectedOptions.splice(currentIndex, 1);
     }
     setSelectedWells(newSelectedOptions);
+    dispatch({ type: types.ACTIONS, payload: {...store.state.payload, wells: newSelectedOptions} });
   };
 
   const isSelectedWell = value => selectedWells.includes(value);
@@ -113,6 +114,7 @@ export default function Histogram() {
       newSelectedOptions.splice(currentIndex, 1);
     }
     setSelectedLogs(newSelectedOptions);
+    dispatch({ type: types.ACTIONS, payload: {...store.state.payload, logs: newSelectedOptions} });
   };
 
   const isSelectedLog = value => selectedLogs.includes(value);
@@ -126,6 +128,7 @@ export default function Histogram() {
       newSelectedOptions.splice(currentIndex, 1);
     }
     setSelectedFormations(newSelectedOptions);
+    dispatch({ type: types.ACTIONS, payload: {...store.state.payload, formations: newSelectedOptions} });
   };
 
   const isSelectedFormation = value => selectedFormations.includes(value);

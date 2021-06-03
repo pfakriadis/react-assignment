@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dashboard from '../layouts/Dashboard/Dashboard';
 import { makeStyles, Grid, List, ListItem, ListItemText } from '@material-ui/core';
 import {
@@ -80,7 +80,6 @@ export default function Wellbore() {
   const {formations} = useFormation();
   const {plots} = usePlot();
 
-
   const [selectedWells, setSelectedWells] = useState(store.state.payload?.wells ? store.state.payload?.wells : []);
   const [selectedLogs, setSelectedLogs] = useState(store.state.payload?.logs ? store.state.payload?.logs : []);
   const [selectedFormations, setSelectedFormations] = useState(store.state.payload?.formations ? store.state.payload?.formations : []);
@@ -95,6 +94,7 @@ export default function Wellbore() {
       newSelectedOptions.splice(currentIndex, 1);
     }
     setSelectedWells(newSelectedOptions);
+    dispatch({ type: types.ACTIONS, payload: {...store.state.payload, wells: newSelectedOptions} });
   };
 
   const isSelectedWell = value => selectedWells.includes(value);
@@ -108,6 +108,7 @@ export default function Wellbore() {
       newSelectedOptions.splice(currentIndex, 1);
     }
     setSelectedLogs(newSelectedOptions);
+    dispatch({ type: types.ACTIONS, payload: {...store.state.payload, logs: newSelectedOptions} });
   };
 
   const isSelectedLog = value => selectedLogs.includes(value);
@@ -121,6 +122,7 @@ export default function Wellbore() {
       newSelectedOptions.splice(currentIndex, 1);
     }
     setSelectedFormations(newSelectedOptions);
+    dispatch({ type: types.ACTIONS, payload: {...store.state.payload, formations: newSelectedOptions} });
   };
 
   const isSelectedFormation = value => selectedFormations.includes(value);
